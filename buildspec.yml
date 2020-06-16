@@ -4,20 +4,21 @@ phases:
     runtime-versions:
       python: 3.7
     commands:
-      - echo install phase started on `date`
+      - echo install phase started
       - python --version
       - 'curl -O https://bootstrap.pypa.io/get-pip.py'
       - python3 get-pip.py
       - pip install --upgrade pip
-      - pip3 install taskcat
+      - pip3 install taskcat cfn-lint
   build:
     commands:
-      - echo Build phase started on `date`
+      - echo Build phase started 
       # - taskcat test run
+      - cfn-lint -t sqs.yml
       - taskcat test run --no-delete
   post_build:
     commands:
-      - echo Build completed on `date`
+      - echo Build completed
 artifacts:
   files:
     - '**/*'
